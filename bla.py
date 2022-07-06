@@ -1,3 +1,5 @@
+import platform
+
 import speech_recognition as sr
 import sounddevice as sd
 import numpy as np
@@ -26,13 +28,14 @@ from playsound import playsound
 
 
 if __name__ == '__main__':
+    print(platform.system())
     # print(from_microphone())
     # with sd.Stream(callback=print_sound):
     #     sd.sleep(10000)
 
-    language = 'de'
-    tts = gTTS(text="Es ist arsch kalt! So kann man nicht arbeiten!",
-               lang=language,
-               slow=False)
-    tts.save("./res/zu_kalt.mp3")
-    playsound("./res/zu_kalt.mp3")
+    # language = 'de'
+    # tts = gTTS(text="Es ist arsch kalt! So kann man nicht arbeiten!",
+    #            lang=language,
+    #            slow=False)
+    # tts.save("./res/zu_kalt.mp3")
+    # playsound("./res/zu_kalt.mp3")
