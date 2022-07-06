@@ -31,6 +31,7 @@ class SoulE:
             )
 
             self._command_listener = CommandListener()
+            self._temp_hum_reader = TempHumReader()
 
     def run(self):
         self._hey_thomas_detector.run()
@@ -40,7 +41,7 @@ class SoulE:
         print(command)
         command_index = CommandInterpreter.process_command(command)
         if command_index == 0:
-            temp, hum = TempHumReader.read()
+            temp, hum = self._temp_hum_reader.read()
             print("temp: {}, hum: {}".format(temp, hum))
             if temp > 25:
                 playsound("./res/zu_warm.mp3")
