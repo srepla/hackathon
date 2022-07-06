@@ -28,7 +28,18 @@ from playsound import playsound
 
 
 if __name__ == '__main__':
-    print(platform.system())
+
+    a = ["Temperatur", "Warm", "kAlt"]
+
+    a = [x.lower() for x in a]
+
+    if "temperatur" in a or "warm" in a or "kalt" in a:
+        print("pimmel")
+
+    print([x.lower() for x in a])
+
+
+    #print(platform.system())
     # print(from_microphone())
     # with sd.Stream(callback=print_sound):
     #     sd.sleep(10000)
