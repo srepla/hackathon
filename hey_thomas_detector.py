@@ -14,12 +14,14 @@ import struct
 import wave
 from datetime import datetime
 from threading import Thread
+from time import sleep
 
 import pvporcupine
+from playsound import playsound
 from pvrecorder import PvRecorder
 
 
-class PorcupineDemo(Thread):
+class HeyThomasDetector(Thread):
     """
     Microphone Demo for Porcupine wake word engine. It creates an input audio stream from a microphone, monitors it, and
     upon detecting the specified wake word(s) prints the detection time and wake word on console. It optionally saves
@@ -51,7 +53,7 @@ class PorcupineDemo(Thread):
         :param output_path: If provided recorded audio will be stored in this location at the end of the run.
         """
 
-        super(PorcupineDemo, self).__init__()
+        super(HeyThomasDetector, self).__init__()
 
         self._access_key = access_key
         self._library_path = library_path
@@ -69,6 +71,8 @@ class PorcupineDemo(Thread):
          occurrences of the wake word(s). It prints the time of detection for each occurrence and the wake word.
          """
 
+        self._print_config()
+
         keywords = list()
         for x in self._keyword_paths:
             keyword_phrase_part = os.path.basename(x).replace('.ppn', '').split('_')
@@ -80,6 +84,8 @@ class PorcupineDemo(Thread):
         porcupine = None
         recorder = None
         wav_file = None
+        needCallback = False
+
         try:
             porcupine = pvporcupine.create(
                 access_key=self._access_key,
@@ -112,7 +118,9 @@ class PorcupineDemo(Thread):
                 result = porcupine.process(pcm)
                 if result >= 0:
                     print('[%s] Detected %s' % (str(datetime.now()), keywords[result]))
-                    self._callback()
+                    needCallback = True
+                    break
+
         except pvporcupine.PorcupineInvalidArgumentError as e:
             print("One or more arguments provided to Porcupine is invalid: {\n" +
                   f"\t{self._access_key=}\n" +
@@ -150,6 +158,11 @@ class PorcupineDemo(Thread):
             if wav_file is not None:
                 wav_file.close()
 
+            if needCallback:
+                playsound("./res/feedback.mp3")
+                self._callback()
+                self.run()
+
     @classmethod
     def show_audio_devices(cls):
         devices = PvRecorder.get_audio_devices()
@@ -157,16 +170,8 @@ class PorcupineDemo(Thread):
         for i in range(len(devices)):
             print(f'index: {i}, device name: {devices[i]}')
 
-
-def callback():
-    print("gayt")
-
-
-if __name__ == '__main__':
-    PorcupineDemo(
-        callback=callback,
-        access_key="RYkVj5ZVY154e1XGTlVy3NU8p1Y241B4QT9ldgRM9xV1b710JqrhXA==",
-        model_path="./res/porcupine_params_de.pv",
-        keyword_paths=["./res/Hey-Thomas_de_mac_v2_1_0.ppn"],
-        sensitivities=[0.5],
-    ).run()
+    @staticmethod
+    def _print_config():
+        for attribute, value in HeyThomasDetector.__dict__.items():
+            print(value)
+        HeyThomasDetector.show_audio_devices()
