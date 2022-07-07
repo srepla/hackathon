@@ -13,25 +13,20 @@ class SoulE:
 
         self._use_indicator = False
 
+        kw_path = []
         if platform.system() == "Darwin":
-            self._hey_thomas_detector = HeyThomasDetector(
-                callback=self.process_hey_thomas,
-                access_key="RYkVj5ZVY154e1XGTlVy3NU8p1Y241B4QT9ldgRM9xV1b710JqrhXA==",
-                model_path="./res/porcupine_params_de.pv",
-                keyword_paths=["./res/Hey-Thomas_de_mac_v2_1_0.ppn"],
-                sensitivities=[0.5],
-            )
-
+            kw_path = ["./res/Hey-Thomas_de_mac_v2_1_0.ppn"]
         elif platform.system() == "Linux":
-            self._hey_thomas_detector = HeyThomasDetector(
-                callback=self.process_hey_thomas,
-                access_key="RYkVj5ZVY154e1XGTlVy3NU8p1Y241B4QT9ldgRM9xV1b710JqrhXA==",
-                model_path="./res/porcupine_params_de.pv",
-                keyword_paths=["./res/Hey-Thomas_de_raspberry-pi_v2_1_0.ppn"],
-                sensitivities=[0.5],
-            )
+            kw_path = ["./res/Hey-Thomas_de_raspberry-pi_v2_1_0.ppn"]
             self._use_indicator = True
 
+        self._hey_thomas_detector = HeyThomasDetector(
+            callback=self.process_hey_thomas,
+            access_key="RYkVj5ZVY154e1XGTlVy3NU8p1Y241B4QT9ldgRM9xV1b710JqrhXA==",
+            model_path="./res/porcupine_params_de.pv",
+            keyword_paths=kw_path,
+            sensitivities=[0.5],
+        )
         self._command_listener = CommandListener()
 
     def run(self):
