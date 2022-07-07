@@ -45,6 +45,9 @@ class SoulE:
 
             print("Recognized Command Phrase: %s" % command)
 
+            if self._indicator:
+                self._indicator.finished_recording()
+
             if command_index == 0:
                 TempSkill().run_skill()
             elif command_index == 1:
@@ -52,9 +55,6 @@ class SoulE:
 
         except Exception as e:
             print(e)
-
-        if self._indicator:
-            self._indicator.finished_recording()
 
 
 if __name__ == '__main__':
