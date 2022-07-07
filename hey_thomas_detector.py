@@ -14,10 +14,8 @@ import struct
 import wave
 from datetime import datetime
 from threading import Thread
-from time import sleep
 
 import pvporcupine
-from playsound import playsound
 from pvrecorder import PvRecorder
 
 from thomas_feedbacker import ThomasFeedbacker
@@ -67,7 +65,7 @@ class HeyThomasDetector(Thread):
 
         self._output_path = output_path
 
-        self._thomas_feedbacker = ThomasFeedbacker(True)
+        self._thomas_feedbacker = ThomasFeedbacker()
 
     def run(self):
         """

@@ -3,7 +3,8 @@ import platform
 from command_interpreter import CommandInterpreter
 from command_listener import CommandListener
 from hey_thomas_detector import HeyThomasDetector
-from ready_to_record_indicator import ReadyToRecordIndicator
+from nsfw_detector import NSFWDetector
+from ready_to_record_indicator import StatusIndicator
 from thomas_skills.joke_skill import JokeSkill
 from thomas_skills.temp_skill import TempSkill
 
@@ -20,7 +21,7 @@ class SoulE:
             self._indicator = None
         elif platform.system() == "Linux":
             kw_path = ["./res/Hey-Thomas_de_raspberry-pi_v2_1_0.ppn"]
-            self._indicator = ReadyToRecordIndicator()
+            self._indicator = StatusIndicator()
 
         self._hey_thomas_detector = HeyThomasDetector(
             callback=self.process_hey_thomas,

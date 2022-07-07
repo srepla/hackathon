@@ -1,8 +1,7 @@
 import RPi.GPIO as GPIO
-from time import sleep
 
 
-class ReadyToRecordIndicator:
+class StatusIndicator:
 
     def __init__(self):
         GPIO.setwarnings(False)
