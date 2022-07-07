@@ -1,3 +1,4 @@
+from gtts import gTTS
 from playsound import playsound
 
 from data_store import DataStore
@@ -14,7 +15,13 @@ class TempSkill(AbstractThomasSkill):
 
         print("temp: {}, hum: {}".format(temp, hum))
 
-        if temp > 25:
+        tts = gTTS(text="Es ist %s Grad warm. Die Luftfeuchtigkeit beträgt %s Prozent" % (temp, hum),
+                   lang='de',
+                   slow=False)
+        tts.save("./res/temp.mp3")
+        playsound("./res/temp.mp3")
+
+        if temp > 27:
             playsound("./res/zu_warm.mp3")
-        elif temp <= 25:
+        elif temp <= 10:
             playsound("./res/zu_kalt.mp3")
