@@ -1,6 +1,6 @@
 from playsound import playsound
 
-from db.data_store import DataStore
+from data_store import DataStore
 from thomas_skills.abstract_thomas_skill import AbstractThomasSkill
 
 

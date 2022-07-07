@@ -6,7 +6,7 @@ class DataStore:
     def __init__(self):
 
         try:
-            self._conn = sqlite3.connect('../res/sensors.db')
+            self._conn = sqlite3.connect('res/sensors.db')
             cur = self._conn.cursor()
             cur.execute('''CREATE TABLE IF NOT EXISTS temp_sensor(temp_c, humidity);''')
             self._conn.commit()
