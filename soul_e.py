@@ -22,7 +22,7 @@ class SoulE:
             kw_path = ["./res/Hey-Thomas_de_mac_v2_1_0.ppn"]
             self._indicator = None
         elif platform.system() == "Linux":
-            import GPIO as GPIO
+            import RPi.GPIO as GPIO
 
             kw_path = ["./res/Hey-Thomas_de_raspberry-pi_v2_1_0.ppn"]
             self._indicator = StatusIndicator()
