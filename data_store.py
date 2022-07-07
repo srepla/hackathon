@@ -21,5 +21,5 @@ class DataStore:
 
     def load_from_db(self):
         cur = self._conn.cursor()
-        cur.execute('''SELECT * FROM temp_sensor WHERE id = 1;''')
+        cur.execute('''SELECT temp_c, humidity FROM temp_sensor WHERE id = 1;''')
         return cur.fetchone()
