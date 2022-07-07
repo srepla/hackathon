@@ -2,7 +2,7 @@ import board
 import adafruit_dht
 from time import sleep
 
-from db.data_store import DataStore
+from data_store import DataStore
 
 
 class TempHumSensor:
