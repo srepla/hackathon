@@ -1,0 +1,16 @@
+import RPi.GPIO as GPIO
+from time import sleep
+
+
+class ReadyToRecordIndicator:
+
+    def __init__(self):
+        GPIO.setwarnings(False)
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(8, GPIO.OUT, initial=GPIO.LOW)
+
+    def is_recording(self):
+        GPIO.output(8, GPIO.HIGH)
+
+    def finished_recording(self):
+        GPIO.output(8, GPIO.LOW)

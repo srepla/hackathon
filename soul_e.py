@@ -3,6 +3,7 @@ import platform
 from command_interpreter import CommandInterpreter
 from command_listener import CommandListener
 from hey_thomas_detector import HeyThomasDetector
+from ready_to_record_indicator import ReadyToRecordIndicator
 from thomas_skills.joke_skill import JokeSkill
 from thomas_skills.temp_skill import TempSkill
 
@@ -21,6 +22,7 @@ class SoulE:
                 keyword_paths=["./res/Hey-Thomas_de_mac_v2_1_0.ppn"],
                 sensitivities=[0.5],
             )
+            self._indicator = None
 
         elif platform.system() == "Linux":
             self._hey_thomas_detector = HeyThomasDetector(
@@ -30,15 +32,19 @@ class SoulE:
                 keyword_paths=["./res/Hey-Thomas_de_raspberry-pi_v2_1_0.ppn"],
                 sensitivities=[0.5],
             )
-            self._use_indicator = True
+            self._indicator = ReadyToRecordIndicator()
 
         self._command_listener = CommandListener()
+
 
     def run(self):
         self._hey_thomas_detector.run()
 
     def process_hey_thomas(self):
         try:
+            if self._indicator:
+                self._indicator.is_recording()
+
             command = self._command_listener.from_microphone()
             command_index = CommandInterpreter.process_command(command)
 
@@ -51,6 +57,9 @@ class SoulE:
 
         except Exception as e:
             print(e)
+
+        if self._indicator:
+            self._indicator.finished_recording()
 
 
 if __name__ == '__main__':
