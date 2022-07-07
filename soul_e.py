@@ -55,6 +55,8 @@ class SoulE:
                 JokeSkill().run_skill()
 
         except Exception as e:
+            if self._indicator:
+                self._indicator.finished_recording()
             print(e)
 
 
