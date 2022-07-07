@@ -1,5 +1,9 @@
-import board
-import adafruit_dht
+import platform
+
+if platform.system() == "Linux":
+    import board
+    import adafruit_dht
+
 from time import sleep
 
 from data_store import DataStore

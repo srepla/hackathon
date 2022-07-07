@@ -1,12 +1,16 @@
-import RPi.GPIO as GPIO
+import platform
+
+if platform.system() == "Linux":
+    import RPi.GPIO as GPIO
 
 
 class StatusIndicator:
 
     def __init__(self):
-        GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(8, GPIO.OUT, initial=GPIO.LOW)
+        if platform.system() == "Linux":
+            GPIO.setwarnings(False)
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setup(8, GPIO.OUT, initial=GPIO.LOW)
 
     def is_recording(self):
         GPIO.output(8, GPIO.HIGH)

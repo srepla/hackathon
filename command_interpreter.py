@@ -7,3 +7,5 @@ class CommandInterpreter:
             return 0
         if "witz" in commands or "lustig" in commands or "scherz" in commands:
             return 1
+        if "timer" in commands or "wecker" in commands or "alarm" in commands:
+            return 2

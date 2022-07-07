@@ -4,5 +4,5 @@ from abc import ABC, abstractmethod
 class AbstractThomasSkill(ABC):
 
     @abstractmethod
-    def run_skill(self):
+    def run_skill(self, command=None):
         pass

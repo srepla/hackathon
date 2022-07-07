@@ -1,12 +1,15 @@
 import platform
+from threading import Thread
 
 from command_interpreter import CommandInterpreter
 from command_listener import CommandListener
 from hey_thomas_detector import HeyThomasDetector
+from temp_hum_sensor import TempHumSensor
 from nsfw_detector import NSFWDetector
 from ready_to_record_indicator import StatusIndicator
 from thomas_skills.joke_skill import JokeSkill
 from thomas_skills.temp_skill import TempSkill
+from thomas_skills.timer_skill import TimerSkill
 
 
 class SoulE:
@@ -32,7 +35,6 @@ class SoulE:
         )
         self._command_listener = CommandListener()
 
-
     def run(self):
         self._hey_thomas_detector.run()
 
@@ -53,6 +55,8 @@ class SoulE:
                 TempSkill().run_skill()
             elif command_index == 1:
                 JokeSkill().run_skill()
+            elif command_index == 2:
+                TimerSkill().run_skill(command)
 
         except Exception as e:
             if self._indicator:
@@ -61,4 +65,14 @@ class SoulE:
 
 
 if __name__ == '__main__':
-    SoulE().run()
+    temp_hum = None
+    if platform.system() == "Linux":
+        temp_hum = Thread(target=TempHumSensor().run)
+        temp_hum.start()
+
+    soul_e = Thread(target=SoulE().run)
+    soul_e.start()
+
+    soul_e.join()
+    if temp_hum is not None:
+        temp_hum.join()

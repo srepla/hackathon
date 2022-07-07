@@ -10,7 +10,7 @@ class TempSkill(AbstractThomasSkill):
     def __init__(self):
         self._data_store = DataStore()
 
-    def run_skill(self):
+    def run_skill(self, command=None):
         temp, hum = self._data_store.load_from_db()
 
         print("temp: {}, hum: {}".format(temp, hum))
