@@ -9,4 +9,4 @@ class NSFWDetector:
         GPIO.setup(11, GPIO.IN)
 
     def get_nsfw_state(self):
-        return GPIO.input(22) == GPIO.HIGH
+        return GPIO.input(11) == 1
