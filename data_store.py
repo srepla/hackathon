@@ -8,7 +8,11 @@ class DataStore:
         try:
             self._conn = sqlite3.connect('res/sensors.db')
             cur = self._conn.cursor()
-            cur.execute('''CREATE TABLE IF NOT EXISTS temp_sensor(id, temp_c, humidity);''')
+            cur.execute('''CREATE TABLE IF NOT EXISTS temp_sensor(
+            id INTEGER PRIMARY KEY NOT NULL, 
+            temp_c NOT NULL,
+            humidity NOT NULL
+            );''')
             self._conn.commit()
         except Exception as e:
             print(e)
@@ -21,5 +25,5 @@ class DataStore:
 
     def load_from_db(self):
         cur = self._conn.cursor()
-        cur.execute('''SELECT temp_c, humidity FROM temp_sensor WHERE id = 1;''')
+        cur.execute('''SELECT * FROM temp_sensor WHERE id = 1;''')
         return cur.fetchone()

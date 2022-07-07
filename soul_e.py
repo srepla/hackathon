@@ -11,6 +11,8 @@ class SoulE:
 
     def __init__(self):
 
+        self._use_indicator = False
+
         if platform.system() == "Darwin":
             self._hey_thomas_detector = HeyThomasDetector(
                 callback=self.process_hey_thomas,
@@ -28,6 +30,7 @@ class SoulE:
                 keyword_paths=["./res/Hey-Thomas_de_raspberry-pi_v2_1_0.ppn"],
                 sensitivities=[0.5],
             )
+            self._use_indicator = True
 
         self._command_listener = CommandListener()
 
