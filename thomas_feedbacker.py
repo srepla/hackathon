@@ -6,8 +6,8 @@ from playsound import playsound
 
 class ThomasFeedbacker:
 
-    def __init__(self):
-        self.nsfw = False
+    def __init__(self, nsfw=False):
+        self._nsfw = nsfw
 
         self._sfw_phrases = [
             "Hi",
@@ -19,12 +19,12 @@ class ThomasFeedbacker:
         self._nsfw_phrases = [
             "Nerv nicht!",
             "Du sollst arbeiten und nicht quatschen!",
-            "Mach dein kram alleine, Thomas hat kein bock!"
+            "Mach dein kram alleine, Thomas hat kein bock!",
             "Kündigung ist Raus!"
         ]
 
     def play_feedback_phrase(self):
-        text = random.choice(self._nsfw_phrases) if self.nsfw else random.choice(self._sfw_phrases)
+        text = random.choice(self._nsfw_phrases) if self._nsfw else random.choice(self._sfw_phrases)
         tts = gTTS(text=text,
                    lang='de',
                    slow=False)

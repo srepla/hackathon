@@ -20,6 +20,8 @@ import pvporcupine
 from playsound import playsound
 from pvrecorder import PvRecorder
 
+from thomas_feedbacker import ThomasFeedbacker
+
 
 class HeyThomasDetector(Thread):
     """
@@ -64,6 +66,8 @@ class HeyThomasDetector(Thread):
         self._input_device_index = input_device_index
 
         self._output_path = output_path
+
+        self._thomas_feedbacker = ThomasFeedbacker(True)
 
     def run(self):
         """
@@ -159,7 +163,8 @@ class HeyThomasDetector(Thread):
                 wav_file.close()
 
             if needCallback:
-                playsound("./res/feedback.mp3")
+                self._thomas_feedbacker.play_feedback_phrase()
+
                 self._callback()
                 self.run()
 

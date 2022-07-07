@@ -1,14 +1,10 @@
-import json
 import platform
-import requests
-from gtts import gTTS
-
-from playsound import playsound
 
 from command_interpreter import CommandInterpreter
 from command_listener import CommandListener
 from hey_thomas_detector import HeyThomasDetector
-from temp_hum_reader import TempHumReader
+from thomas_skills.joke_skill import JokeSkill
+from thomas_skills.temp_skill import TempSkill
 
 
 class SoulE:
@@ -34,7 +30,6 @@ class SoulE:
             )
 
         self._command_listener = CommandListener()
-        self._temp_hum_reader = TempHumReader()
 
     def run(self):
         self._hey_thomas_detector.run()
@@ -42,24 +37,14 @@ class SoulE:
     def process_hey_thomas(self):
         try:
             command = self._command_listener.from_microphone()
-            print(command)
             command_index = CommandInterpreter.process_command(command)
+
+            print("Recognized Command Phrase: %s" % command)
+
             if command_index == 0:
-                temp, hum = self._temp_hum_reader.read()
-                print("temp: {}, hum: {}".format(temp, hum))
-                if temp > 25:
-                    playsound("./res/zu_warm.mp3")
-                elif temp <= 25:
-                    playsound("./res/zu_kalt.mp3")
+                TempSkill().run_skill()
             elif command_index == 1:
-                joke_response = requests.get('https://witzapi.de/api/joke')
-                joke_text = json.loads(joke_response.text)
-                print(joke_text[0]['text'])
-                tts = gTTS(text=joke_text[0]['text'],
-                           lang='de',
-                           slow=False)
-                tts.save("./res/joke.mp3")
-                playsound("./res/joke.mp3")
+                JokeSkill().run_skill()
 
         except Exception as e:
             print(e)
