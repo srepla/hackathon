@@ -1,4 +1,7 @@
+import json
 import platform
+import requests
+from gtts import gTTS
 
 from playsound import playsound
 
@@ -30,23 +33,36 @@ class SoulE:
                 sensitivities=[0.5],
             )
 
-            self._command_listener = CommandListener()
-            self._temp_hum_reader = TempHumReader()
+        self._command_listener = CommandListener()
+        self._temp_hum_reader = TempHumReader()
 
     def run(self):
         self._hey_thomas_detector.run()
 
     def process_hey_thomas(self):
-        command = self._command_listener.from_microphone()
-        print(command)
-        command_index = CommandInterpreter.process_command(command)
-        if command_index == 0:
-            temp, hum = self._temp_hum_reader.read()
-            print("temp: {}, hum: {}".format(temp, hum))
-            if temp > 25:
-                playsound("./res/zu_warm.mp3")
-            elif temp <= 25:
-                playsound("./res/zu_kalt.mp3")
+        try:
+            command = self._command_listener.from_microphone()
+            print(command)
+            command_index = CommandInterpreter.process_command(command)
+            if command_index == 0:
+                temp, hum = self._temp_hum_reader.read()
+                print("temp: {}, hum: {}".format(temp, hum))
+                if temp > 25:
+                    playsound("./res/zu_warm.mp3")
+                elif temp <= 25:
+                    playsound("./res/zu_kalt.mp3")
+            elif command_index == 1:
+                joke_response = requests.get('https://witzapi.de/api/joke')
+                joke_text = json.loads(joke_response.text)
+                print(joke_text[0]['text'])
+                tts = gTTS(text=joke_text[0]['text'],
+                           lang='de',
+                           slow=False)
+                tts.save("./res/joke.mp3")
+                playsound("./res/joke.mp3")
+
+        except Exception as e:
+            print(e)
 
 
 if __name__ == '__main__':

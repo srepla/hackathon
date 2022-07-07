@@ -1,19 +1,23 @@
 import time
-import board
-import adafruit_dht
+# import board
+# import adafruit_dht
 
 
 class TempHumReader:
 
     def __init__(self):
-        self._dht_device = adafruit_dht.DHT22(board.D4)
+        # self._dht_device = adafruit_dht.DHT22(board.D4)
+        self._dht_device = {
+            "temperature_c": 20,
+            "humidity": 50
+        }
 
     def read(self):
         for i in range(5):
             try:
                 # Print the values to the serial port
-                temperature_c = self._dht_device.temperature
-                humidity = self._dht_device.humidity
+                temperature_c = self._dht_device["temperature"]
+                humidity = self._dht_device["humidity"]
                 print("Temp: {:.1f} C    Humidity: {}% ".format(temperature_c, humidity))
                 return temperature_c, humidity
 
@@ -23,5 +27,5 @@ class TempHumReader:
                 time.sleep(2.0)
                 continue
             except Exception as error:
-                self._dht_device.exit()
+                # self._dht_device.exit()
                 raise error

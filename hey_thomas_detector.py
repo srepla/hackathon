@@ -71,7 +71,7 @@ class HeyThomasDetector(Thread):
          occurrences of the wake word(s). It prints the time of detection for each occurrence and the wake word.
          """
 
-        self._print_config()
+        # self._print_config()
 
         keywords = list()
         for x in self._keyword_paths:
