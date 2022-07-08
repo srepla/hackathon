@@ -7,6 +7,7 @@ from hey_thomas_detector import HeyThomasDetector
 from temp_hum_sensor import TempHumSensor
 from ready_to_record_indicator import StatusIndicator
 from thomas_skills.joke_skill import JokeSkill
+from thomas_skills.markus_skill import MarkusSkill
 from thomas_skills.temp_skill import TempSkill
 from thomas_skills.timer_skill import TimerSkill
 
@@ -60,6 +61,8 @@ class SoulE:
                 JokeSkill().run_skill()
             elif command_index == 2:
                 TimerSkill().run_skill(command)
+            else:
+                MarkusSkill().run_skill()
 
         except Exception as e:
             if self._indicator:
