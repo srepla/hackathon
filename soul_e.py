@@ -8,6 +8,7 @@ from hey_thomas_detector import HeyThomasDetector
 from temp_hum_sensor import TempHumSensor
 from thomas_skills.joke_skill import JokeSkill
 from thomas_skills.markus_skill import MarkusSkill
+from thomas_skills.music_skill import MusicSkill
 from thomas_skills.temp_skill import TempSkill
 from thomas_skills.timer_skill import TimerSkill
 from thomas_skills.values_skill import ValuesSkill
@@ -62,6 +63,8 @@ class SoulE:
                 TimerSkill().run_skill(command)
             elif command_index == 3:
                 ValuesSkill().run_skill()
+            elif command_index == 4:
+                MusicSkill().run_skill()
             else:
                 MarkusSkill().run_skill()
 

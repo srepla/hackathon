@@ -23,20 +23,15 @@ from playsound import playsound
 #         return text
 
 
+import webbrowser
 
 
 
 
 if __name__ == '__main__':
+    url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
-    a = ["Temperatur", "Warm", "kAlt"]
-
-    a = [x.lower() for x in a]
-
-    if "temperatur" in a or "warm" in a or "kalt" in a:
-        print("pimmel")
-
-    print([x.lower() for x in a])
+    webbrowser.open(url, new=0, autoraise=True)
 
 
     #print(platform.system())

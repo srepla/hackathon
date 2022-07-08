@@ -11,3 +11,5 @@ class CommandInterpreter:
             return 2
         if "werte" in commands:
             return 3
+        if "musik" in commands:
+            return 4
