@@ -13,3 +13,6 @@ class CommandInterpreter:
             return 3
         if "musik" in commands:
             return 4
+        if "katzen" in commands or "katze" in commands:
+            return 5
+

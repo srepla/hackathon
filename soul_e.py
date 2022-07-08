@@ -6,6 +6,7 @@ from command_interpreter import CommandInterpreter
 from command_listener import CommandListener
 from hey_thomas_detector import HeyThomasDetector
 from temp_hum_sensor import TempHumSensor
+from thomas_skills.cat_skill import CatSkill
 from thomas_skills.joke_skill import JokeSkill
 from thomas_skills.markus_skill import MarkusSkill
 from thomas_skills.music_skill import MusicSkill
@@ -65,6 +66,8 @@ class SoulE:
                 ValuesSkill().run_skill()
             elif command_index == 4:
                 MusicSkill().run_skill()
+            elif command_index == 5:
+                CatSkill().run_skill()
             else:
                 MarkusSkill().run_skill()
 
