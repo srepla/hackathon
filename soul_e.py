@@ -82,7 +82,6 @@ if __name__ == '__main__':
 
     temp_hum = None
     if platform.system() == "Linux":
-        sleep(10)
         temp_hum = Thread(target=TempHumSensor().run)
         temp_hum.start()
 
