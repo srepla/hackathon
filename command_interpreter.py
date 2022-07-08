@@ -9,3 +9,5 @@ class CommandInterpreter:
             return 1
         if "timer" in commands or "wecker" in commands or "alarm" in commands:
             return 2
+        if "werte" in commands:
+            return 3
