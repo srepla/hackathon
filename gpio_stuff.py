@@ -1,14 +1,14 @@
 import platform
 
+if platform.system() == "Linux":
+    import RPi.GPIO as GPIO
+
 
 class GPIOStuff:
 
     def __init__(self):
-        if platform.system() == "Linux":
-            import RPi.GPIO as GPIO
-
+        if platform.system() == "Linus":
             GPIO.setwarnings(False)
-            GPIO.setmode(GPIO.BOARD)
             GPIO.setup(8, GPIO.OUT, initial=GPIO.LOW)
             GPIO.setup(11, GPIO.IN)
 
