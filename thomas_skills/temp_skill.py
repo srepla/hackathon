@@ -11,8 +11,8 @@ class TempSkill(AbstractThomasSkill):
         self._data_store = DataStore()
 
     def run_skill(self, command=None):
-        temp, hum = self._data_store.load_from_db()
 
+        temp, hum = self._data_store.load_from_db()
         print("temp: {}, hum: {}".format(temp, hum))
 
         tts = gTTS(text="Es ist %s Grad warm. Die Luftfeuchtigkeit beträgt %s Prozent" % (temp, hum),

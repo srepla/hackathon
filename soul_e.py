@@ -5,7 +5,6 @@ from command_interpreter import CommandInterpreter
 from command_listener import CommandListener
 from hey_thomas_detector import HeyThomasDetector
 from temp_hum_sensor import TempHumSensor
-from ready_to_record_indicator import StatusIndicator
 from thomas_skills.joke_skill import JokeSkill
 from thomas_skills.markus_skill import MarkusSkill
 from thomas_skills.temp_skill import TempSkill
@@ -21,14 +20,12 @@ class SoulE:
         kw_path = []
         if platform.system() == "Darwin":
             kw_path = ["./res/Hey-Thomas_de_mac_v2_1_0.ppn"]
-            self._indicator = None
+            self._gpio = None
         elif platform.system() == "Linux":
-            import RPi.GPIO as GPIO
+            from gpio_stuff import GPIOStuff
 
             kw_path = ["./res/Hey-Thomas_de_raspberry-pi_v2_1_0.ppn"]
-            self._indicator = StatusIndicator()
-            GPIO.setwarnings(False)
-            GPIO.setmode(GPIO.BOARD)
+            self._gpio = GPIOStuff()
 
         self._hey_thomas_detector = HeyThomasDetector(
             callback=self.process_hey_thomas,
@@ -44,16 +41,16 @@ class SoulE:
 
     def process_hey_thomas(self):
         try:
-            if self._indicator:
-                self._indicator.is_recording()
+            if self._gpio:
+                self._gpio.is_recording()
 
             command = self._command_listener.from_microphone()
             command_index = CommandInterpreter.process_command(command)
 
             print("Recognized Command Phrase: %s" % command)
 
-            if self._indicator:
-                self._indicator.finished_recording()
+            if self._gpio:
+                self._gpio.finished_recording()
 
             if command_index == 0:
                 TempSkill().run_skill()
@@ -65,8 +62,9 @@ class SoulE:
                 MarkusSkill().run_skill()
 
         except Exception as e:
-            if self._indicator:
-                self._indicator.finished_recording()
+            MarkusSkill().run_skill()
+            if self._gpio:
+                self._gpio.finished_recording()
             print(e)
 
 

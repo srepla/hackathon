@@ -1,10 +1,9 @@
-import platform
 import random
 
 from gtts import gTTS
 from playsound import playsound
 
-from nsfw_detector import NSFWDetector
+from gpio_stuff import GPIOStuff
 
 
 class ThomasFeedbacker:
@@ -25,14 +24,11 @@ class ThomasFeedbacker:
             "Kündigung ist Raus!"
         ]
 
-        self._nsfw_detector = NSFWDetector()
+        self._nsfw_detector = GPIOStuff()
 
     def play_feedback_phrase(self):
 
-        nsfw = True
-
-        if platform.system() == "Linux":
-            nsfw = self._nsfw_detector.get_nsfw_state()
+        nsfw = self._nsfw_detector.get_nsfw_state()
 
         text = random.choice(self._nsfw_phrases) if nsfw else random.choice(self._sfw_phrases)
         tts = gTTS(text=text,
