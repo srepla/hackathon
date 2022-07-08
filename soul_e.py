@@ -1,5 +1,6 @@
 import platform
 from threading import Thread
+from time import sleep
 
 from command_interpreter import CommandInterpreter
 from command_listener import CommandListener
@@ -69,13 +70,14 @@ class SoulE:
 
 
 if __name__ == '__main__':
-    temp_hum = None
-    if platform.system() == "Linux":
-        temp_hum = Thread(target=TempHumSensor().run)
-        temp_hum.start()
-
     soul_e = Thread(target=SoulE().run)
     soul_e.start()
+
+    temp_hum = None
+    if platform.system() == "Linux":
+        sleep(10)
+        temp_hum = Thread(target=TempHumSensor().run)
+        temp_hum.start()
 
     soul_e.join()
     if temp_hum is not None:

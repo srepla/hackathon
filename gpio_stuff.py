@@ -7,7 +7,7 @@ if platform.system() == "Linux":
 class GPIOStuff:
 
     def __init__(self):
-        if platform.system() == "Linus":
+        if platform.system() == "Linux":
             GPIO.setwarnings(False)
             GPIO.setup(8, GPIO.OUT, initial=GPIO.LOW)
             GPIO.setup(11, GPIO.IN)
