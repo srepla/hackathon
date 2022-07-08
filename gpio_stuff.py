@@ -9,6 +9,7 @@ class GPIOStuff:
     def __init__(self):
         if platform.system() == "Linux":
             GPIO.setwarnings(False)
+            GPIO.setmode(GPIO.BOARD)
             GPIO.setup(8, GPIO.OUT, initial=GPIO.LOW)
             GPIO.setup(11, GPIO.IN)
 
