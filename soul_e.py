@@ -70,14 +70,15 @@ class SoulE:
 
 
 if __name__ == '__main__':
-    soul_e = Thread(target=SoulE().run)
-    soul_e.start()
 
     temp_hum = None
     if platform.system() == "Linux":
         sleep(10)
         temp_hum = Thread(target=TempHumSensor().run)
         temp_hum.start()
+
+    soul_e = Thread(target=SoulE().run)
+    soul_e.start()
 
     soul_e.join()
     if temp_hum is not None:
